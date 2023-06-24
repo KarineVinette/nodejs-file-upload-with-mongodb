@@ -7,10 +7,15 @@ var Photo     = mongoose.model('Photos');
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-  Photo.find({}, ['path','caption'], {sort:{ _id: -1} }, function(err, photos) {
-    res.render('index', { title: 'NodeJS file upload tutorial', msg:req.query.msg, photolist : photos });
-    
+  Photo.find({}, ['path', 'caption'], { sort: { _id: -1 } })
+  .then((photos) => {
+    res.render('index', { title: 'NodeJS file upload tutorial', msg: req.query.msg, photolist: photos });
+  })
+  .catch((err) => {
+    // Handle the error
+    console.error(err);
   });
+
 
 });
 
@@ -39,12 +44,14 @@ router.post('/upload', function(req, res) {
             };
   
           var photo = new Photo(document); 
-          photo.save(function(error){
-            if(error){ 
-              throw error;
-            } 
+          photo.save()
+          .then(() => {
             res.redirect('/?msg=1');
-         });
+          })
+          .catch((error) => {
+            throw error;
+          });
+        
       }
     }
   });    

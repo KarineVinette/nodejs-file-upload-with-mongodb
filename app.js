@@ -9,7 +9,8 @@ var bodyParser = require('body-parser');
 /* connect to database */
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/dbphotogallery');
+mongoose.connect('mongodb+srv://karinevinette:1Milliame@photogallery.h0fqo9y.mongodb.net/',{ useNewUrlParser: true, useUnifiedTopology: true })
+.then(() => { console.log('MongoDB connected...')})
 require("./models/Photo");
 
 /* Define routes */
